@@ -18,7 +18,7 @@ public class Main {
     
     try {
     api.login();
-    api.deleteQemu("proxmox", 100);
+    //api.deleteQemu("proxmox", 100);
     } catch(Exception e){
     e.printStackTrace();
     }
