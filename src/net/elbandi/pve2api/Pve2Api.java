@@ -484,8 +484,28 @@ public class Pve2Api {
 	}
 
 	// TODO: createOpenvz
-	// TODO: updateOpenvz
+    // TODO: updateOpenvz
+       
+        public String createOpenvz(VmOpenvz vm) throws LoginException, JSONException, IOException
+        {
+            return createOpenvz(vm.getName(), vm);
+        }
 
+        public String createOpenvz(String node, VmOpenvz vm) throws LoginException, JSONException, IOException
+        {
+            Map<String, String> parameterData = vm.getCreateParams();
+            System.out.println(parameterData.toString());
+            String path = "/nodes/" + node + "/openvz";
+            JSONObject jsonObject = pve_action(path, RestClient.RequestMethod.POST, parameterData);
+            return jsonObject.getString("data");
+        }
+
+        public String updateOpenvz(String node, VmOpenvz vm) throws LoginException, JSONException, IOException
+        {      
+            return createOpenvz(node, vm);
+        }
+        
+        
 	protected Map<Integer, String> initlogOpenvz(String node, int vmid, Map<String, String> data)
 			throws LoginException, JSONException, IOException {
 		JSONObject jObj = pve_action("/nodes/" + node + "/openvz/" + vmid + "/initlog",
