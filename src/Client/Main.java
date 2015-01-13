@@ -5,8 +5,13 @@
  */
 package Client;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.List;
+import javax.security.auth.login.LoginException;
 import net.elbandi.pve2api.Pve2Api;
 import net.elbandi.pve2api.data.VmOpenvz;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,51 +25,56 @@ public class Main {
         //Creation d'une VM
         try {
             api.login();
+            //api.startOpenvz("proxmox", 105);
+            //api.stopOpenvz("proxmox", 100, null);
+            //api.shutdownOpenvz("proxmox", 100);
             //api.deleteQemu("proxmox", 100);
-
+            
             System.out.println("login ok");
             JSONObject data = new JSONObject();
-            boolean vrai = true;
 
-            data.put("cpu", 200);
-            data.put("diskwrite", 10);
-            data.put("maxdisk",1000);
-            data.put("maxmem", 5000);
-            data.put("maxswap", 4000);
-            data.put("mem",5120);
-            data.put("netin", 10);
-            data.put("netout", 10);
-            data.put("nproc", 10);
-            data.put("status","start");
-            data.put("uptime", 10);
-            data.put("cpuunits", 1000);
-            data.put("digest","digest");
-            data.put("diskspace", 1024);
-            data.put("hostname","hostname");
-            data.put("nameserver","proxmox");
+            data.put("cpu", 0);
+            data.put("diskwrite", 0);
+            data.put("maxdisk",0);
+            data.put("maxmem", 0);
+            data.put("maxswap", 0);
+            data.put("mem",0);
+            data.put("netin", 0);
+            data.put("netout", 0);
+            data.put("nproc", 0);
+            data.put("status","");
+            data.put("uptime", 0);
+            data.put("cpuunits", 0);
+            data.put("digest","");
+            data.put("diskspace", 0);
+            data.put("hostname","");
+            data.put("nameserver","");
             data.put("netif","");
             data.put("onboot", true);
-            data.put("quotatime", 10);
-            data.put("quotaugidlimit", 10);
-            data.put("searchdomain", "search domain");
-            data.put("diskread", 1024);
-
-            data.put("vmid", 101);
-            data.put("name","proxmox");
-            data.put("storage", "local");
-            data.put("ostemplate","local:vztmpl/ubuntu-12.04-standard_12.04-1_i386.tar.gz");
+            data.put("quotatime", 0);
+            data.put("quotaugidlimit", 0);
+            data.put("searchdomain", "");
+            data.put("diskread", 0);
+            data.put("vmid", 0);
+            data.put("name","");
+            data.put("storage", "");
+            data.put("ostemplate","");
                 //debian-7.0-standard_7.0-2_i386.tar.gz
                 //ubuntu-12.04-standard_12.04-1_i386.tar.gz
-            data.put("memory", 512);
-            data.put("swap", 512);
-            data.put("disk", 4);
-            data.put("cpus", 1);
-            data.put("ip_address","192.168.100.55");
+            data.put("memory", 0);
+            data.put("ip_address","");
 
+            
+            //Date we (optionnaly) receive from the SAAS (the vmid is mandatory)
+            data.put("disk", 0);
+            data.put("cpus", 5);
+            data.put("swap", 0);
+            data.put("vmid", 102);
+            
             VmOpenvz vmOpenvz = new VmOpenvz(data); 
             vmOpenvz.SetConfig(data);
-            api.createOpenvz(vmOpenvz);
-
+            api.updateOpenvz("proxmox", vmOpenvz);
+            
         } catch(Exception e){
         e.printStackTrace();
         }
